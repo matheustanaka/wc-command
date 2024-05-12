@@ -7,7 +7,7 @@ def readfile(file):
 
 def countBytes(file_content):
     #return print("Quantidade de bytes: ", len(file_content.read().encode('utf-8')))
-    return print(len(file_content.read().encode('utf-8')))
+    return len(file_content.read().encode('utf-8'))
 
 def countLines(file_content):
     lines = file_content.read().split('\n')
@@ -18,11 +18,11 @@ def countLines(file_content):
         # print("Número de linhas: {} - {}".format(count, line))
 
     #print("Número de linhas: {}".format(count))
-    return print(count)
+    return count
 
 def countWords(file_content):
     #return print("Quantidade de palavras", len(file_content.read().split())) 
-    return print(len(file_content.read().split()))
+    return len(file_content.read().split())
 
 def countCharacters(file_content):
     text = file_content.read() 
@@ -32,14 +32,10 @@ def countCharacters(file_content):
         # print(character)
         
     #return print("Número de caracteres: ", count)
-    return print(count)
-
-def logger():
-    charFunc = countCharacters
-    print(charFunc)
-
+    return count
 
 def commandLine():
+
     parser = argparse.ArgumentParser(description="Copy wc command", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument("-c", "--bytes", action="store_true", help="Count the number of Bytes in a file")
@@ -50,21 +46,26 @@ def commandLine():
 
     args = parser.parse_args()
 
-    if args.filepath:
-        countBytes(readfile(args.filepath))
-        countLines(readfile(args.filepath))
-        countWords(readfile(args.filepath))
-        countCharacters(readfile(args.filepath))
-    else:
-        if args.bytes:
-            countBytes(readfile(args.filepath))
-        if args.lines:
-            countLines(readfile(args.filepath))
-        if args.words:
-            countWords(readfile(args.filepath))
-        if args.chars:
-            countCharacters(readfile(args.filepath))
+    logs = []
 
+    if args.bytes:
+        logs.append(f"{countBytes(readfile(args.filepath))}")
+    if args.lines:
+        logs.append(f"{countLines(readfile(args.filepath))}")
+    if args.words:
+        logs.append(f"{countWords(readfile(args.filepath))}")
+    if args.chars:
+        logs.append(f"{countCharacters(readfile(args.filepath))}")
+    if args.filepath and args.bytes == False and args.lines == False and args.words == False and args.chars == False:
+        logs.append(f"{countBytes(readfile(args.filepath))}")
+        logs.append(f"{countLines(readfile(args.filepath))}")
+        logs.append(f"{countWords(readfile(args.filepath))}")
+        logs.append(f"{countCharacters(readfile(args.filepath))}")
+    
+    if logs:
+        print(' '.join(logs), args.filepath)
+    else:
+        print('fudeu')
 
 commandLine()
 
