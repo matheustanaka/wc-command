@@ -12,7 +12,7 @@ def countBytes(file_content):
     return len(file_content.read().encode('utf-8'))
 
 def countLines(file_content):
-    lines = file_content.read().split('\n')
+    lines = file_content.read().splitlines()
 
     count = 0
     for line in lines:
@@ -69,4 +69,6 @@ def commandLine():
     else:
         print('fudeu')
 
-commandLine()
+
+if __name__ == "__main__":
+    commandLine()
